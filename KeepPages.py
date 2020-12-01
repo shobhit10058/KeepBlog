@@ -31,10 +31,10 @@ def main():
 @click.argument('name')
 @click.argument('url')
 def AddBlog(topic, name, url):
-    """Add your favourite blog"""
+    """ Add your favourite Page"""
     #click.echo(" ".join([topic,name,url]))
-    print(dic)
     make = True
+    """Keep the name and topic descriptive"""
     if(validators.url(url)):
         if(topic in topics):
             if(name in dic):
@@ -63,6 +63,11 @@ def Open(name):
     else:
         click.echo("No such pages are saved, try first saving it")
 
+@main.command()
+def SeePages():
+    """See all saved pages of a topic"""
+    click.echo('There are '+ str(len(topics)) + ' topics')
+    print(topics)
 
 if __name__ == "__main__":
     main()
