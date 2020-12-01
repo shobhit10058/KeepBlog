@@ -11,8 +11,7 @@ def main():
     os.chdir(home)
     if not os.path.exists("blogs"):
         os.makedirs('blogs')    
-    global dic
-    global topics
+    global dic, topics
     topics = set(os.listdir('blogs'))
     dic = {}
     os.chdir('blogs')
@@ -64,10 +63,23 @@ def Open(name):
         click.echo("No such pages are saved, try first saving it")
 
 @main.command()
-def SeePages():
+@click.option('--topic', '-f')
+def SeePages(topic):
     """See all saved pages of a topic"""
     click.echo('There are '+ str(len(topics)) + ' topics')
-    print(topics)
+    print("\n".join(list(topics)))
+    if(topic == None):
+        print('Input a topic to see all the pages within it')
+        topic = input()
+    
+    if(not topic in topics):
+        print('No such topic exists')
+        return
+
+    for r, d, files in os.walk(topic):
+        for f in files:
+            file = open(topic+'/'+f, 'r')
+            print("Name-> " + file.readline()[:-1], "Link-> " + file.readline(), sep='\t')
 
 if __name__ == "__main__":
     main()
