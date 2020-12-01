@@ -70,6 +70,8 @@ def SeePages(topic):
     """See all saved pages of a topic"""
     click.echo('There are '+ str(len(topics)) + ' topics')
     click.echo("\n".join(list(topics)))
+    if(len(topics) == 0):
+        return
     if(topic == None):
         topic = click.prompt("Input a topic to see all the pages within it")
     
