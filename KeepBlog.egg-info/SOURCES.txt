@@ -1,0 +1,8 @@
+KeepPages.py
+setup.py
+KeepBlog.egg-info/PKG-INFO
+KeepBlog.egg-info/SOURCES.txt
+KeepBlog.egg-info/dependency_links.txt
+KeepBlog.egg-info/entry_points.txt
+KeepBlog.egg-info/requires.txt
+KeepBlog.egg-info/top_level.txt

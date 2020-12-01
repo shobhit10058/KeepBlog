@@ -3,12 +3,12 @@ from setuptools import setup
 setup(
     name='KeepBlog',
     version='0.1',
-    py_modules=['KeepBlog'],
+    py_modules=['KeepPages'],
     install_requires=[
-        'Click','validators', 'webbrowser'
+        'Click','validators'
     ],
     entry_points='''
         [console_scripts]
-        KeepPages=KeepPages:main
+        KeepBlog=KeepPages:main
     ''',
 )
