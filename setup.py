@@ -5,7 +5,7 @@ setup(
     version='0.1',
     py_modules=['KeepBlog'],
     install_requires=[
-        'Click','validators'
+        'Click','validators', 'webbrowser'
     ],
     entry_points='''
         [console_scripts]

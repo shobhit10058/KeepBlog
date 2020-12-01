@@ -23,7 +23,6 @@ def main():
                 name, url = file.readline()[:-1], file.readline()[:-1]
                 dic[name] = url
                 file.close()
-    print(dic)
     pass
 
 
