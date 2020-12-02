@@ -1,4 +1,4 @@
-import os, click, validators, webbrowser, shutil
+import os, click, validators, webbrowser, shutil, string
 from pathlib import Path
 
 @click.group()
@@ -7,15 +7,16 @@ def main():
     Simple CLI for saving your favourite webpages like blogs 
     under different topics and then seeing them whenever you wish
     """
+    global dic, topics, dic_top_pag, confDir
     home = str(Path.home())
     os.chdir(home)
-    if not os.path.exists("blogs"):
-        os.makedirs('blogs')    
-    global dic, topics, dic_top_pag
-    topics = set(os.listdir('blogs'))
+    confDir = '.blogs'
+    if not os.path.exists(confDir):
+        os.makedirs(confDir)     
+    topics = set(os.listdir(confDir))
     dic = {}
     dic_top_pag = {}
-    os.chdir('blogs')
+    os.chdir(confDir)
     for Topic in topics:
         for r, d, files in os.walk(Topic):
             dic_top_pag[Topic] = set()
@@ -35,6 +36,7 @@ def main():
 def AddBlog(topic, name, url):
     """ Add your favourite Page"""
     make = True
+    topic,name= (s.lower() for s in [topic, name])
     """Keep the name and topic descriptive"""
     if(validators.url(url)):
         if(topic in topics):
@@ -65,7 +67,7 @@ def Open(name):
         click.echo("No such pages are saved, try first saving it")
 
 @main.command()
-@click.option('--topic', '-f', help="Shows the saved pages under a topic")
+@click.option('--topic', '-f', help="Shows the saved pages under a topic(lower or upper case)")
 def SeePages(topic):
     """See all saved pages of a topic"""
     click.echo('There are '+ str(len(topics)) + ' topics')
@@ -73,8 +75,10 @@ def SeePages(topic):
     if(len(topics) == 0):
         return
     if(topic == None):
-        topic = click.prompt("Input a topic to see all the pages within it")
+        topic = click.prompt("Input a topic(lower or upper case) to see all the pages within it")
     
+    topic = topic.lower()
+
     if(not topic in topics):
         click.echo('No such topic exists')
         return
@@ -83,23 +87,27 @@ def SeePages(topic):
         click.echo("Name-> " + pages + ", Link-> " + dic[pages][0])
 
 @main.command()
+@click.confirmation_option(help='This will delete all saved pages')
 @click.option('--topic', '-rt', help="Removes all saved pages under the topic")
 @click.option('--page', '-r', help="Removes specified saved page with specified name")
-@click.password_option()
-def remove(topic, page, password):
-    """If you run without any options this will delete all saved pages, run with --help to see usage"""
+def remove(topic, page):
+    """without any options this delete all saved pages, see with --help"""
     if((topic == None) and (page == None)):
         os.chdir('../')
-        shutil.rmtree('blogs')
+        shutil.rmtree(confDir)
     if(topic != None):
+        topic = topic.lower() 
         if(topic in topics):
             shutil.rmtree(topic)
         else:
             click.echo("failed to remove the topic as it does not exist")
     if(page != None):
+        page = page.lower()
         if(page in dic):
             os.chdir(dic[page])
             os.remove(page)
+        else:
+            click.echo("failed to remove the page as it does not exist")
 
 if __name__ == "__main__":
     main()
