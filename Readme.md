@@ -24,8 +24,7 @@ Options:
 Commands:
   addblog   Add your favourite Page
   open      Open the webpage in your browser
-  remove    If you run without any options this will delete all saved
-            pages,...
+  remove    without any options this delete all saved pages, see with --help
   seepages  See all saved pages of a topic
 </pre>
 
@@ -39,19 +38,18 @@ KeepBlog addblog SegmentTrees SegmentTreesProblems https://codeforces.com/blog/e
 KeepBlog seepages
 <pre>
 There are 1 topics
-SegmentTrees
+segmenttrees
 Input a topic to see all the pages within it: SegmentTrees
-Name-> SegmentTreesProblems, Link-> https://codeforces.com/blog/entry/22616
+Name-> segmenttreesproblems, Link-> https://codeforces.com/blog/entry/22616
 </pre>
 
-KeepBlog open SegmentTreesProblems
+KeepBlog open SegmenttreesProblems
 <pre>Opening in your browser</pre>
 and then it opens in a new tab in your browser.
 
 KeepBlog remove
 <pre>
-Password: 
-Repeat for confirmation: 
+Do you want to continue? [y/N]: y
 </pre>
 
 KeepBlog seepages
