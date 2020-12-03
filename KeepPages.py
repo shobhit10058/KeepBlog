@@ -60,6 +60,7 @@ def AddBlog(topic, name, url):
 @click.argument('name')
 def Open(name):
     """Open the webpage in your browser"""
+    name = name.lower()
     if(name in dic):
         click.echo('Opening in your browser')
         webbrowser.open_new_tab(dic[name][0])    
