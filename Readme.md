@@ -28,6 +28,11 @@ Commands:
   seepages  See all saved pages of a topic
 </pre>
 
+Validators are also used to validate a webpage address.<br>
+KeepBlog addblog Wrong invalidPage hi.com
+<pre>
+Your url is not correct, you can try using http:// in front of the url you are saving
+</pre>
 KeepBlog seepages
 <pre>
 There are 0 topics
