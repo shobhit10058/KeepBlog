@@ -1,6 +1,6 @@
-This simple cli interface will help you organise your favourite webpages in your system through command line.<br> 
-Presently most of things work in linux. The project is in developing mode as there are lot of improvements that can be done.<br>
-So, if there are any suggestions please open a issue.
+#### This simple cli interface will help you organise your favourite webpages in your system through command line.<br> 
+#### Presently most of things work in linux. The project is in developing mode as there are lot of improvements that can be done.<br>
+#### So, if there are any suggestions please open a issue.
 
 *Installation:* 
 1. clone the repository
