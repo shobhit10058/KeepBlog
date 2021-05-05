@@ -5,7 +5,7 @@ setup(
     version='0.1',
     py_modules=['KeepPages'],
     install_requires=[
-        'Click','validators'
+        'Click','validators', 'fuzzywuzzy', 'python-Levenshtein'
     ],
     entry_points='''
         [console_scripts]

@@ -63,4 +63,41 @@ There are 0 topics
 </pre>
 
 You can use command remove to remove any particular topic or page also. <br>
-Check with KeepBlog remove --help.
+Check with KeepBlog remove --help.<br>
+
+Added fuzzy search, it uses the maximum edit distance of any substring with the query string.<br>
+This is implemented with the fuzzywuzzy library partial ratio method of fuzz.<br>
+Top 5 maximum scored strings are shown.<br>
+
+KeepBlog seepages
+<pre>
+There are 7 topics
+opensourcechannels
+search_algo
+kwoc
+youtube_transcript
+kwocprojects
+problems
+important
+Input a topic(lower or upper case) to see all the pages within it: woc
+No such topic exists
+
+The most similar are:
+kwoc
+kwocprojects
+opensourcechannels
+search_algo
+youtube_transcript
+</pre>
+
+KeepBlog open search
+<pre>
+No such pages are saved.
+
+The most similar are:
+different_search_method
+spaceye
+work-at-a-startup
+startwithextensions
+sim-c
+</pre>

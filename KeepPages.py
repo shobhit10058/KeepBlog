@@ -1,4 +1,8 @@
 import os, click, validators, webbrowser, shutil, string
+from numpy.lib.financial import rate
+import pandas as pd
+import numpy as np
+from fuzzywuzzy import fuzz
 from pathlib import Path
 
 @click.group()
@@ -29,14 +33,35 @@ def main():
     pass
 
 
+def Search(Iterator, query):
+    strings = [s for s in Iterator]
+
+    tar = [strings[0] for _ in range(5)]
+    ini = [0 for _ in range(5)]
+
+    for s in strings:
+        ps = fuzz.partial_ratio(s, query)
+        for i in range(len(ini)):
+            if(ps > ini[i]):
+                ini[i + 1: ] = ini[i: -1]
+                tar[i + 1: ] = tar[i: -1]
+                tar[i] = s
+                ini[i] = ps
+                break
+
+    click.echo("\nThe most similar are:")
+    for i in range(len(ini)):
+        if(ini[i] > 0):
+            click.echo(tar[i])
+
+
 @main.command()
-@click.argument('topic')
-@click.argument('name')
-@click.argument('url')
-def AddBlog(topic, name, url):
+def AddBlog():
     """ Add your favourite Page"""
     make = True
-    topic,name= (s.lower() for s in [topic, name])
+    topic = click.prompt("Enter the topic").lower()
+    name = click.prompt("Enter the name (Keep it unique under the topic)").lower()
+    url = click.prompt("Enter the correct url").lower()
     """Keep the name and topic descriptive"""
     if(validators.url(url)):
         if(topic in topics):
@@ -65,7 +90,8 @@ def Open(name):
         click.echo('Opening in your browser')
         webbrowser.open_new_tab(dic[name][0])    
     else:
-        click.echo("No such pages are saved, try first saving it")
+        click.echo("No such pages are saved.")
+        Search(dic, name)
 
 @main.command()
 @click.option('--topic', '-f', help="Shows the saved pages under a topic(lower or upper case)")
@@ -82,10 +108,17 @@ def SeePages(topic):
 
     if(not topic in topics):
         click.echo('No such topic exists')
+        Search(topics, topic)
         return
 
+    List = pd.DataFrame(columns=["Name", "Link"])
+
     for pages in dic_top_pag[topic]:
-        click.echo("Name-> " + pages + ", Link-> " + dic[pages][0])
+        d = {}
+        d["Name"] = pages
+        d["Link"] = dic[pages][0]
+        List = List.append(d, ignore_index=True)
+    click.echo(List)
 
 @main.command()
 @click.confirmation_option(help='This will delete all saved pages')
@@ -102,6 +135,7 @@ def remove(topic, page):
             shutil.rmtree(topic)
         else:
             click.echo("failed to remove the topic as it does not exist")
+            Search(topics, topic)
     if(page != None):
         page = page.lower()
         if(page in dic):
@@ -109,6 +143,7 @@ def remove(topic, page):
             os.remove(page)
         else:
             click.echo("failed to remove the page as it does not exist")
+            Search(dic, page)
 
 if __name__ == "__main__":
     main()
