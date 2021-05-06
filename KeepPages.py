@@ -70,7 +70,7 @@ def AddBlog():
                 make = False
             else:
                 dic[name] = [url, topic]
-                click.echo("Your webpage is saved, you can open it using the openyourpage command")
+                click.echo("Your webpage is saved, you can open it using the open command")
         else:
             os.makedirs(topic)
         if(make):
@@ -139,8 +139,8 @@ def remove(topic, page):
     if(page != None):
         page = page.lower()
         if(page in dic):
-            os.chdir(dic[page])
-            os.remove(page)
+            os.chdir(dic[page][1])
+            os.remove(page+".txt")
         else:
             click.echo("failed to remove the page as it does not exist")
             Search(dic, page)
