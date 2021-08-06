@@ -1,7 +1,5 @@
 import os, click, validators, webbrowser, shutil, string
-from numpy.lib.financial import rate
 import pandas as pd
-import numpy as np
 from fuzzywuzzy import fuzz
 from pathlib import Path
 
